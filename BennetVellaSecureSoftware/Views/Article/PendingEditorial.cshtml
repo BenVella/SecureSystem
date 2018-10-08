@@ -1,0 +1,49 @@
+﻿@model IEnumerable<BennetVellaSecureSoftware.Models.Article>
+
+@{
+    ViewBag.Title = "Pending Editorial Review";
+}
+
+<h2>Pending Editorial Review</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            User
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Review Comment
+        </th>
+        <th>
+            Review Date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review.Comment)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Review.DateReviewed)
+            </td>
+            <td>
+                @Html.ActionLink("Download", "Download", new { fileName = item.FileName }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Review", "EditorialReview", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

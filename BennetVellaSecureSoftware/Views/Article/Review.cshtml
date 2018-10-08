@@ -1,0 +1,91 @@
+﻿@model BennetVellaSecureSoftware.Models.ArticleReview
+
+@{
+    ViewBag.Title = "Review";
+}
+
+<h2>Review Details</h2>
+
+<div>
+    <h4>Article</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Author")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.AspNetUser.UserName)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Creation Date")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.DateCreated)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Last Edited")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.DateLastEdited)
+        </dd>
+
+        <dt>
+            @Html.DisplayName("Title")
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.Title)
+        </dd>
+    </dl>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Review</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.articleModel.Id)
+        @Html.HiddenFor(model => model.articleModel.UserId)
+        @Html.HiddenFor(model => model.articleModel.Title)
+
+        <div class="form-group">
+            @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.reviewModel.Comment, new { style = "Width:100%; Height:300px" })
+                @Html.ValidationMessageFor(model => model.reviewModel.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Accepted", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.reviewModel.Accepted)
+                    @Html.ValidationMessageFor(model => model.reviewModel.Accepted, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "PendingReview")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

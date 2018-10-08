@@ -1,0 +1,39 @@
+﻿@model IEnumerable<BennetVellaSecureSoftware.Models.AspNetUser>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>User Management</h2>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Username")
+        </th>
+        <th>
+            @Html.DisplayName("Roles")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => user.UserName)
+            </td>
+            <td>
+                |
+                @foreach (var role in user.AspNetRoles)
+                {
+                    <span> @Html.DisplayFor(modelItem => role.Name) |</span>
+                }
+            </td>
+            <td>
+                @Html.ActionLink("Remove", "Remove", new { id = user.Id }) |
+                @Html.ActionLink("Add", "Add", new { id = user.Id })
+            </td>
+        </tr>
+    }
+
+</table>

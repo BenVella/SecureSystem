@@ -1,0 +1,43 @@
+﻿@model IEnumerable<BennetVellaSecureSoftware.Models.Article>
+
+@{
+    ViewBag.Title = "Pending Review";
+}
+
+<h2>Pending Review</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("User")
+        </th>
+        <th>
+            @Html.DisplayName("Creation Date")
+        </th>
+        <th>
+            @Html.DisplayName("Title")
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.AspNetUser.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateCreated)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink("Download", "Download", new { fileName = item.FileName }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Review", "Review", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>

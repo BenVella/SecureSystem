@@ -1,0 +1,102 @@
+﻿@model BennetVellaSecureSoftware.Models.ArticleReview
+
+@{
+    ViewBag.Title = "Editorial Review";
+}
+
+<h2>Editorial Review</h2>
+
+<div>
+    <h4>Info</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayName("Author")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.AspNetUser.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayName("Title")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.Title)
+        </dd>
+        <dt>
+            @Html.DisplayName("Creation Date")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.articleModel.DateCreated)
+        </dd>
+        <dt>
+            @Html.DisplayName("Reviewed By")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.reviewModel.AspNetUser.UserName)
+        </dd>
+    </dl>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Article</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.articleModel.Id)
+        @Html.HiddenFor(model => model.articleModel.UserId)
+        @Html.HiddenFor(model => model.articleModel.Title)
+
+
+        @Html.HiddenFor(model => model.reviewModel.Id)
+        @Html.HiddenFor(model => model.reviewModel.DateReviewed)
+
+
+
+        <div class="form-group">
+            @Html.Label("Comment", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.reviewModel.Comment, new { style = "Width:100%; Height:300px" })
+                @Html.ValidationMessageFor(model => model.reviewModel.Comment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Accepted", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.reviewModel.Accepted)
+                    @Html.ValidationMessageFor(model => model.reviewModel.Accepted, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Publish Date", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="checkbox">
+                    @Html.EditorFor(model => model.articleModel.DatePublished)
+                    @Html.ValidationMessageFor(model => model.articleModel.DatePublished, "", new { @class = "text-danger" })
+                    @if (ViewBag.Message != null)
+                    {<span class="field-validation-valid text-danger">@ViewBag.Message</span>}
+                </div>
+            </div>
+        </div>
+
+        
+
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "PendingEditorial")
+</div>
